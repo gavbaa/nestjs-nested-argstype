@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { NewRecipeInput } from './dto/new-recipe.input';
-import { RecipesArgs } from './dto/recipes.args';
+import { RecipesArgs, RecipesNestedArgs } from './dto/recipes.args';
 import { Recipe } from './models/recipe.model';
 import { RecipesService } from './recipes.service';
 
@@ -24,6 +24,11 @@ export class RecipesResolver {
   @Query(returns => [Recipe])
   recipes(@Args() recipesArgs: RecipesArgs): Promise<Recipe[]> {
     return this.recipesService.findAll(recipesArgs);
+  }
+
+  @Query(returns => [Recipe])
+  recipesNestedArgs(@Args() recipesNestedArgs: RecipesNestedArgs): Promise<Recipe[]> {
+    return this.recipesService.findAll(recipesNestedArgs.custom);
   }
 
   @Mutation(returns => Recipe)

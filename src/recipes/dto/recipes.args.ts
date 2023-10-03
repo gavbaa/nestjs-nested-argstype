@@ -12,3 +12,10 @@ export class RecipesArgs {
   @Max(50)
   take = 25;
 }
+
+
+@ArgsType()
+export class RecipesNestedArgs {
+    @Field(type => RecipesArgs)
+    custom?: RecipesArgs;
+}
